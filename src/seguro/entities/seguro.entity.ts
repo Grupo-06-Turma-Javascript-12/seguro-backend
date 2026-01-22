@@ -9,6 +9,7 @@ import {
 
 @Entity({ name: 'tb_seguros' })
 export class Seguro {
+  [x: string]: any;
   @PrimaryGeneratedColumn()
   id: number;
 
