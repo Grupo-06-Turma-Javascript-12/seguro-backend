@@ -13,6 +13,7 @@ import { Usuario } from '../../usuario/entities/usuario.entity';
 
 @Entity({ name: 'tb_seguros' })
 export class Seguro {
+  [x: string]: any;
   @PrimaryGeneratedColumn()
   id: number;
 
