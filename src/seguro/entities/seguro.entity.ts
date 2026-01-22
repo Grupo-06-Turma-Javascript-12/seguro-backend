@@ -8,8 +8,8 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { Usuario } from '../../usuario/entities/usuario.entity';
 import { Categoria } from '../../categoria/entities/categoria.entity';
+import { Usuario } from '../../usuario/entities/usuario.entity';
 
 @Entity({ name: 'tb_seguros' })
 export class Seguro {
@@ -40,11 +40,11 @@ export class Seguro {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @ManyToOne(() => Usuario)
+  @ManyToOne(() => Usuario, (usuario) => usuario.seguro)
   @JoinColumn({ name: 'usuario_id' })
   usuario: Usuario;
 
-  @ManyToOne(() => Categoria)
+  @ManyToOne(() => Categoria, (categoria) => categoria.seguro)
   @JoinColumn({ name: 'categoria_id' })
   categoria: Categoria;
 }
