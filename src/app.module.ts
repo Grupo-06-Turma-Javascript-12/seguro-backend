@@ -15,7 +15,7 @@ import { Usuario } from './usuario/entities/usuario.entity';
       username: 'root',
       password: 'root',
       database: 'db_sistema_seguro',
-      entities: [Seguro, Categoria, Usuario],
+      entities: [Seguro, Categoria, Seguro],
       synchronize: true,
     }),
   ],
