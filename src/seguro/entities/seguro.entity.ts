@@ -1,14 +1,14 @@
-import { IsNotEmpty, IsIn } from 'class-validator';
+import { IsIn, IsNotEmpty } from 'class-validator';
 import {
   Column,
+  CreateDateColumn,
   Entity,
   PrimaryGeneratedColumn,
-  CreateDateColumn,
   UpdateDateColumn,
 } from 'typeorm';
 
 @Entity({ name: 'tb_seguros' })
-export class Seguros {
+export class Seguro {
   @PrimaryGeneratedColumn()
   id: number;
 
