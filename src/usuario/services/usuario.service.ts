@@ -41,7 +41,7 @@ export class UsuarioService {
     if (buscaUsuario)
       throw new HttpException('O Usuario já existe!', HttpStatus.BAD_REQUEST);
 
-    return await this.usuarioRepository.save(usuario)
+    return await this.usuarioRepository.save(usuario);
   }
 
   async update(usuario: Usuario): Promise<Usuario> {
@@ -49,18 +49,17 @@ export class UsuarioService {
 
     const buscaUsuario = await this.findByUsuario(usuario.usuario);
 
-    if (buscaUsuario && buscaUsuario.id !== usuario.id){
+    if (buscaUsuario && buscaUsuario.id !== usuario.id) {
       throw new HttpException(
         'Usuário (e-mail) já Cadastrado!',
         HttpStatus.BAD_REQUEST,
       );
-          }
-          return await this.usuarioRepository.save(usuario)
     }
+    return await this.usuarioRepository.save(usuario);
+  }
 
- async delete(id: number): Promise<DeleteResult> {
+  async delete(id: number): Promise<DeleteResult> {
     await this.findById(id);
     return await this.usuarioRepository.delete(id);
-    
-}
+  }
 }
