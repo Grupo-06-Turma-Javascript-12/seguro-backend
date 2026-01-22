@@ -47,22 +47,49 @@ export class SeguroService {
   }
 
   async create(seguro: Seguro): Promise<Seguro> {
+    seguro.status_cobertura = 'Em análise';
     // await this.categoriaService.findById(seguro.categoria.id);
 
     return await this.seguroRepository.save(seguro);
   }
 
   async update(seguro: Seguro): Promise<Seguro> {
-    await this.findById(seguro.id);
+    const seguroExistente = await this.findById(seguro.id);
+
+    seguro.status_cobertura = seguroExistente.status_cobertura;
 
     // await this.categoriaService.findById(seguro.categoria.id);
 
-    return await this.seguroRepository.save(seguro);
+    return await this.seguroRepository.save({
+      ...seguroExistente,
+      ...seguro,
+    });
   }
 
   async delete(id: number): Promise<DeleteResult> {
     await this.findById(id);
 
     return await this.seguroRepository.delete(id);
+  }
+
+  async atualizarStatus(id: number, novoStatus: string): Promise<Seguro> {
+    const statusPermitidos = ['Em análise', 'Ativo', 'Inativo'];
+
+    if (!statusPermitidos.includes(novoStatus)) {
+      throw new HttpException('Status inválido', HttpStatus.BAD_REQUEST);
+    }
+
+    const seguro = await this.findById(id);
+
+    if (seguro.status_cobertura === 'Inativo' && novoStatus === 'Ativo') {
+      throw new HttpException(
+        'Seguro inativo não pode ser reativado diretamente',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+
+    seguro.status_cobertura = novoStatus;
+
+    return await this.seguroRepository.save(seguro);
   }
 }
