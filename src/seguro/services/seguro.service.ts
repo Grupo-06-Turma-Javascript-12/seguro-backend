@@ -2,20 +2,21 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DeleteResult, ILike, Repository } from 'typeorm';
 import { Seguro } from '../entities/seguro.entity';
+import { CategoriaService } from '../../categoria/services/categoria.service';
 
 @Injectable()
 export class SeguroService {
   constructor(
     @InjectRepository(Seguro)
     private seguroRepository: Repository<Seguro>,
-    // private categoriaService: CategoriaService,
+    private categoriaService: CategoriaService,
   ) {}
 
   async findAll(): Promise<Seguro[]> {
     return await this.seguroRepository.find({
-      // relations: {
-      //   categoria: true,
-      // },
+      relations: {
+        categoria: true,
+      },
     });
   }
 
@@ -24,9 +25,9 @@ export class SeguroService {
       where: {
         id,
       },
-      // relations: {
-      //   categoria: true,
-      // },
+      relations: {
+        categoria: true,
+      },
     });
 
     if (!seguro)
@@ -40,15 +41,15 @@ export class SeguroService {
       where: {
         numero_apolice: ILike(`%${numero_apolice}%`),
       },
-      // relations: {
-      //   categoria: true,
-      // },
+      relations: {
+        categoria: true,
+      },
     });
   }
 
   async create(seguro: Seguro): Promise<Seguro> {
     seguro.status_cobertura = 'Em análise';
-    // await this.categoriaService.findById(seguro.categoria.id);
+    await this.categoriaService.findById(seguro.categoria.id);
 
     return await this.seguroRepository.save(seguro);
   }
@@ -58,7 +59,7 @@ export class SeguroService {
 
     seguro.status_cobertura = seguroExistente.status_cobertura;
 
-    // await this.categoriaService.findById(seguro.categoria.id);
+    await this.categoriaService.findById(seguro.categoria.id);
 
     return await this.seguroRepository.save({
       ...seguroExistente,
