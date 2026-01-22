@@ -3,9 +3,13 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
+  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { Usuario } from '../../usuario/entities/usuario.entity';
+import { Categoria } from '../../categoria/entities/categoria.entity';
 
 @Entity({ name: 'tb_seguros' })
 export class Seguro {
@@ -35,4 +39,12 @@ export class Seguro {
 
   @UpdateDateColumn()
   updatedAt: Date;
+
+  @ManyToOne(() => Usuario)
+  @JoinColumn({ name: 'usuario_id' })
+  usuario: Usuario;
+
+  @ManyToOne(() => Categoria)
+  @JoinColumn({ name: 'categoria_id' })
+  categoria: Categoria;
 }
