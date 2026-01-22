@@ -16,6 +16,7 @@ import { Seguro } from './seguro/entities/seguro.entity';
       entities: [Seguro],
       synchronize: true,
     }),
+
   ],
   controllers: [AppController],
   providers: [AppService],
