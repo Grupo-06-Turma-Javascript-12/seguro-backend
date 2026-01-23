@@ -1,4 +1,4 @@
-import { IsIn, IsNotEmpty } from 'class-validator';
+import { IsIn, IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
 import {
   Column,
   CreateDateColumn,
@@ -16,19 +16,23 @@ export class Seguro {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @IsNotEmpty()
+  @IsOptional()
   @Column({ length: 100, nullable: false })
   numero_apolice: string;
 
+  @IsNumber()
+  @IsOptional()
   @IsNotEmpty()
   @Column('decimal', { precision: 10, scale: 2, nullable: false })
   valor_apolice: number;
 
   @IsNotEmpty()
+  @IsOptional()
   @Column({ length: 100, nullable: false })
   cobertura: string;
 
   @IsNotEmpty()
+  @IsString()
   @IsIn(['Ativo', 'Inativo', 'Em análise'])
   @Column({ length: 100, nullable: false })
   status_cobertura: string;
