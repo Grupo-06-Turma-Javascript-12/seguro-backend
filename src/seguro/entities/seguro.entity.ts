@@ -37,6 +37,7 @@ export class Seguro {
   @Column({ length: 100, nullable: false })
   cobertura: string;
 
+  @IsOptional()
   @IsNotEmpty()
   @IsString()
   @IsIn(['Ativo', 'Inativo', 'Em análise'])

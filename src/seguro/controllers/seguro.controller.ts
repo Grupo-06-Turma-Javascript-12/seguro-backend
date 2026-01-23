@@ -49,17 +49,13 @@ export class SeguroController {
     return this.seguroService.update(seguro);
   }
 
-  @Put()
+  @Put(':id/status')
   @HttpCode(HttpStatus.OK)
-  async updateStatus(@Body() seguro: Seguro): Promise<Seguro> {
-    if (seguro.id && seguro.status_cobertura) {
-      return this.seguroService.atualizarStatus(
-        seguro.id,
-        seguro.status_cobertura,
-      );
-    }
-
-    return this.seguroService.update(seguro);
+  async updateStatus(
+    @Param('id', ParseIntPipe) id: number,
+    @Body('status') status: string,
+  ) {
+    return this.seguroService.atualizarStatus(id, status);
   }
 
   @Delete('/:id')
