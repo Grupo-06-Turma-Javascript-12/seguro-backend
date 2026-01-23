@@ -4,7 +4,6 @@ import { CategoriaModule } from '../categoria/categoria.module';
 import { SeguroController } from './controllers/seguro.controller';
 import { Seguro } from './entities/seguro.entity';
 import { SeguroService } from './services/seguro.service';
-import { CategoriaModule } from '../categoria/categoria.module';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Seguro]), CategoriaModule],

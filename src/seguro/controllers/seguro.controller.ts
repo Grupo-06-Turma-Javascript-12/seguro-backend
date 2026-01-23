@@ -45,7 +45,13 @@ export class SeguroController {
 
   @Put()
   @HttpCode(HttpStatus.OK)
-  async update(@Body() seguro: Seguro): Promise<Seguro> {
+  update(@Body() seguro: Seguro): Promise<Seguro> {
+    return this.seguroService.update(seguro);
+  }
+
+  @Put()
+  @HttpCode(HttpStatus.OK)
+  async updateStatus(@Body() seguro: Seguro): Promise<Seguro> {
     if (seguro.id && seguro.status_cobertura) {
       return this.seguroService.atualizarStatus(
         seguro.id,
