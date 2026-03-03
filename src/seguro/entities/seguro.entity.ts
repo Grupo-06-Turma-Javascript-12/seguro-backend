@@ -29,7 +29,15 @@ export class Seguro {
   @IsNumber()
   @IsOptional()
   @IsNotEmpty()
-  @Column('decimal', { precision: 10, scale: 2, nullable: false })
+  @Column({
+    type: 'decimal',
+    precision: 19,
+    scale: 4,
+    transformer: {
+      from: (value: string) => parseFloat(value),
+      to: (value: number) => value,
+    },
+  })
   valor_apolice: number;
 
   @IsNotEmpty()
