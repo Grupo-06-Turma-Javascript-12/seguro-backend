@@ -1,8 +1,8 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DeleteResult, ILike, Repository } from 'typeorm';
-import { Seguro } from '../entities/seguro.entity';
 import { CategoriaService } from '../../categoria/services/categoria.service';
+import { Seguro } from '../entities/seguro.entity';
 
 @Injectable()
 export class SeguroService {
