@@ -1,4 +1,10 @@
-import { IsIn, IsNotEmpty } from 'class-validator';
+import {
+  IsIn,
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 import {
   Column,
   CreateDateColumn,
@@ -13,23 +19,35 @@ import { Usuario } from '../../usuario/entities/usuario.entity';
 
 @Entity({ name: 'tb_seguros' })
 export class Seguro {
-  [x: string]: any;
   @PrimaryGeneratedColumn()
   id: number;
 
-  @IsNotEmpty()
+  @IsOptional()
   @Column({ length: 100, nullable: false })
   numero_apolice: string;
 
+  @IsNumber()
+  @IsOptional()
   @IsNotEmpty()
-  @Column('decimal', { precision: 10, scale: 2, nullable: false })
+  @Column({
+    type: 'decimal',
+    precision: 19,
+    scale: 4,
+    transformer: {
+      from: (value: string) => parseFloat(value),
+      to: (value: number) => value,
+    },
+  })
   valor_apolice: number;
 
   @IsNotEmpty()
+  @IsOptional()
   @Column({ length: 100, nullable: false })
   cobertura: string;
 
+  @IsOptional()
   @IsNotEmpty()
+  @IsString()
   @IsIn(['Ativo', 'Inativo', 'Em análise'])
   @Column({ length: 100, nullable: false })
   status_cobertura: string;

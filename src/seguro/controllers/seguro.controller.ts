@@ -10,8 +10,8 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
-import { SeguroService } from '../services/seguro.service';
 import { Seguro } from '../entities/seguro.entity';
+import { SeguroService } from '../services/seguro.service';
 
 @Controller('/seguros')
 export class SeguroController {
@@ -47,6 +47,15 @@ export class SeguroController {
   @HttpCode(HttpStatus.OK)
   update(@Body() seguro: Seguro): Promise<Seguro> {
     return this.seguroService.update(seguro);
+  }
+
+  @Put(':id/status')
+  @HttpCode(HttpStatus.OK)
+  async updateStatus(
+    @Param('id', ParseIntPipe) id: number,
+    @Body('status') status: string,
+  ) {
+    return this.seguroService.atualizarStatus(id, status);
   }
 
   @Delete('/:id')
